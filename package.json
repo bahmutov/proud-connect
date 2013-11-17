@@ -1,6 +1,6 @@
 {
   "name": "proud-connect",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Connect server generating NPM downloads badges by author",
   "main": "index.js",
   "scripts": {

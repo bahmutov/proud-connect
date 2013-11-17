@@ -1,23 +1,23 @@
-# proud-connect v0.0.1
+# proud-connect v0.0.2
 
 > Connect server generating NPM downloads badges by author
 
-[![NPM][proud-icon]][proud-url]
+[![NPM][proud-connect-icon]][proud-connect-url]
 
-[![Build status][proud-ci-image]][proud-ci-url]
-[![dependencies][proud-dependencies-image]][proud-dependencies-url]
-[![devdependencies][proud-devdependencies-image]][proud-devdependencies-url]
+[![Build status][proud-connect-ci-image]][proud-connect-ci-url]
+[![dependencies][proud-connect-dependencies-image]][proud-connect-dependencies-url]
+[![devdependencies][proud-connect-devdependencies-image]][proud-connect-devdependencies-url]
 
 [![endorse][endorse-image]][endorse-url]
 
-[proud-icon]: https://nodei.co/npm/proud.png?downloads=true
-[proud-url]: https://npmjs.org/package/proud
-[proud-ci-image]: https://travis-ci.org/bahmutov/proud.png?branch=master
-[proud-ci-url]: https://travis-ci.org/bahmutov/proud
-[proud-dependencies-image]: https://david-dm.org/bahmutov/proud.png
-[proud-dependencies-url]: https://david-dm.org/bahmutov/proud
-[proud-devdependencies-image]: https://david-dm.org/bahmutov/proud/dev-status.png
-[proud-devdependencies-url]: https://david-dm.org/bahmutov/proud#info=devDependencies
+[proud-connect-icon]: https://nodei.co/npm/proud-connect.png?downloads=true
+[proud-connect-url]: https://npmjs.org/package/proud-connect
+[proud-connect-ci-image]: https://travis-ci.org/bahmutov/proud-connect.png?branch=master
+[proud-connect-ci-url]: https://travis-ci.org/bahmutov/proud-connect
+[proud-connect-dependencies-image]: https://david-dm.org/bahmutov/proud-connect.png
+[proud-connect-dependencies-url]: https://david-dm.org/bahmutov/proud-connect
+[proud-connect-devdependencies-image]: https://david-dm.org/bahmutov/proud-connect/dev-status.png
+[proud-connect-devdependencies-url]: https://david-dm.org/bahmutov/proud-connect#info=devDependencies
 [endorse-image]: https://api.coderwall.com/bahmutov/endorsecount.png
 [endorse-url]: https://coderwall.com/bahmutov
 
@@ -78,12 +78,16 @@ Support: if you find any problems with this module, email / tweet / open issue o
 ## History
 
 
-0.0.0 / 2013-11-13
+0.0.2 / 2013-11-17
 ==================
 
-  * added Procfile
+  * using grunt and grunt-readme, fixes #9, #10, #11
+  * fixed concurrent problem
+
+0.0.1 / 2013-11-13
+==================
+
   * images older than day will be regenerated
-  * old images are regenerated correctly, even if multiple requests arrive
   * returning badge and keeping it in memory
   * working badge return or text, depending on request
 
