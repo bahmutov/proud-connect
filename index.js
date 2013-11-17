@@ -118,7 +118,7 @@ var app = connect()
   .use(connect.logger('dev'))
   .use(connect.static('public'))
   .use(connect.query())
-  .use(function (req, res){
+  .use(function (req, res) {
     if (!req.url || req.url === '/') {
       res.writeHead(401, 'missing NPM username');
       res.end();
