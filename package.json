@@ -21,7 +21,10 @@
     "connect"
   ],
   "author": "Gleb Bahmutov @bahmutov <gleb.bahmutov@gmail.com>",
-  "pre-commit": ["grunt", "npm test"],
+  "pre-commit": [
+    "grunt",
+    "npm test"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/bahmutov/proud-connect/issues"
@@ -29,7 +32,7 @@
   "dependencies": {
     "connect": "~2.11.0",
     "proud-badge": "0.0.2",
-    "proud": "0.0.5",
+    "proud": "0.0.6",
     "easy-table": "~0.2.0",
     "lodash": "~2.3.0",
     "check-types": "~1.1.0",
@@ -38,7 +41,7 @@
     "request": "~2.27.0"
   },
   "devDependencies": {
-    "nodemon": "~0.9.6",
+    "nodemon": "~0.9.7",
     "grunt-contrib-jshint": "~0.7.2",
     "matchdep": "~0.3.0",
     "grunt-readme": "~0.3.0",
