@@ -105,6 +105,10 @@ function sendTextReport(username, res) {
   .then(function (report) {
     console.log('report', report);
 
+    res.writeHead(200, {
+      'Content-Type': 'text/plain'
+    });
+
     if (!report) {
       res.end(username + ' has no modules\n');
     } else {
