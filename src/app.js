@@ -19,6 +19,21 @@ function ensureSpace() {
   }
 }
 
+function keepGeneratedBadge(username, filename) {
+  check.verify.unemptyString(username, 'expected username');
+  check.verify.unemptyString(filename, 'expected generated badge filename');
+
+  var image = fs.readFileSync(filename);
+  badges[username] = {
+    image: image,
+    date: new moment()
+  };
+
+  fs.unlinkSync(filename);
+
+  return image;
+}
+
 function generateBadge(username) {
   check.verify.unemptyString(username, 'expected username');
 
@@ -32,20 +47,8 @@ function generateBadge(username) {
     badge[username] = {};
   }
 
-  // just keep promise in the image's placeholder
   badge[username].generating = badge(username)
-  .then(function (filename) {
-    check.verify.unemptyString(filename, 'expected generated badge filename');
-    var image = fs.readFileSync(filename);
-    badges[username] = {
-      image: image,
-      date: new moment()
-    };
-
-    fs.unlinkSync(filename);
-
-    return image;
-  });
+    .then(keepGeneratedBadge.bind(null, username));
 
   return badge[username].generating;
 }
@@ -141,4 +144,4 @@ module.exports = function listen(port) {
   port = port || process.env.PORT || 3000;
   http.createServer(app).listen(port);
   console.log('listening to port', port);
-}
+};

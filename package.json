@@ -21,7 +21,7 @@
     "connect"
   ],
   "author": "Gleb Bahmutov @bahmutov <gleb.bahmutov@gmail.com>",
-  "pre-commit": "npm test",
+  "pre-commit": ["grunt", "npm test"],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/bahmutov/proud-connect/issues"
