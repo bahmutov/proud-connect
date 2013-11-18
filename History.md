@@ -1,4 +1,13 @@
 
+0.0.3 / 2013-11-17
+==================
+
+  * you can pass desired format as /username/png or /username/json fixes #8
+  * added unit tests
+  * added travis file
+  * added test as pre-commit
+  * added simple sanity test
+
 0.0.2 / 2013-11-17
 ==================
 

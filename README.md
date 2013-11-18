@@ -1,4 +1,4 @@
-# proud-connect v0.0.2
+# proud-connect v0.0.3
 
 > Connect server generating NPM downloads badges by author
 
@@ -77,6 +77,15 @@ Support: if you find any problems with this module, email / tweet / open issue o
 
 ## History
 
+
+0.0.3 / 2013-11-17
+==================
+
+  * you can pass desired format as /username/png or /username/json fixes #8
+  * added unit tests
+  * added travis file
+  * added test as pre-commit
+  * added simple sanity test
 
 0.0.2 / 2013-11-17
 ==================
