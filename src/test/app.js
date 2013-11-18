@@ -48,3 +48,19 @@ gt.async('json', function () {
     gt.start();
   });
 });
+
+gt.async('/json', function () {
+  var username = 'jashkenas';
+  var opts = {
+    url: urlBase + username + '/json'
+  };
+  request(opts, function (err, response, body) {
+    if (err) throw err;
+    gt.equal(response.statusCode, 200, 'got response');
+    gt.equal(response.headers['content-type'], 'application/json', 'returns json');
+
+    var result = JSON.parse(body);
+    gt.equal(result.username, username, 'correct username');
+    gt.start();
+  });
+});

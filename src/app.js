@@ -137,6 +137,12 @@ function sendJsonReport(username, res) {
   .catch(console.error);
 }
 
+function isImage(format) {
+  return (/image/).test(format) ||
+    format === 'png' ||
+    format === 'image';
+}
+
 var app = connect()
   .use(connect.favicon())
   .use(connect.logger('dev'))
@@ -149,18 +155,26 @@ var app = connect()
       return;
     }
 
-    var username = req.url.split('/')[1];
+    var parts = req.url.split('/');
+    var username = parts[1];
     if (!username) {
       res.writeHead(401, 'missing NPM username');
       res.end();
       return;
     }
 
-    console.log('accepts', req.headers.accept);
+    var acceptsFormat = req.headers.accept;
+    if (parts.length > 2) {
+      acceptsFormat = parts[2];
+      check.verify.unemptyString(acceptsFormat, 'wrong format ' + acceptsFormat);
+      console.log('requesting format', acceptsFormat);
+    }
+    console.log('accepts', acceptsFormat);
 
-    if (/image/.test(req.headers.accept)) {
+    if (isImage(acceptsFormat)) {
       sendBadge(username, res);
-    } else if (req.headers.accept === 'application/json') {
+    } else if (acceptsFormat === 'application/json' ||
+      acceptsFormat === 'json') {
       sendJsonReport(username, res);
     } else {
       sendTextReport(username, res);
