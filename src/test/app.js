@@ -143,3 +143,15 @@ gt.async('/json user without modules', function () {
     gt.start();
   });
 });
+
+gt.async('/png user without modules', function () {
+  var username = 'lsilvo';
+  var opts = {
+    url: urlBase + username + '/png'
+  };
+  request(opts, function (err, response, body) {
+    if (err) throw err;
+    gt.equal(response.statusCode, 500, 'got 500 response');
+    gt.start();
+  });
+});
