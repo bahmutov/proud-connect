@@ -11,6 +11,51 @@ gt.module('server', {
   }
 });
 
+(function cachedPng() {
+  var image;
+  var took = 0;
+
+  gt.async('/png', function () {
+    var username = 'jashkenas';
+    var opts = {
+      url: urlBase + username + '/png'
+    };
+    var started = new Date();
+    request(opts, function (err, response, body) {
+      if (err) throw err;
+      var finished = new Date();
+
+      gt.equal(response.statusCode, 200, 'got response');
+      gt.equal(response.headers['content-type'], 'image/png', 'returns png');
+      image = body;
+      gt.ok(image.length > 0, 'positive image length');
+      took = finished - started;
+
+      gt.ok(took > 0, 'took a few ms');
+      gt.start();
+    });
+  });
+
+  gt.async('/png 2 - cached', function () {
+    var username = 'jashkenas';
+    var opts = {
+      url: urlBase + username + '/png'
+    };
+    var started = new Date();
+
+    request(opts, function (err, response, body) {
+      if (err) throw err;
+      var finished = new Date();
+      var took2 = finished - started;
+      gt.ok(took2 < took, 'second request completed faster than first');
+
+      gt.equal(response.statusCode, 200, 'got response');
+      gt.equal(response.headers['content-type'], 'image/png', 'returns png');
+      gt.start();
+    });
+  });
+}());
+
 gt.async('no username', function () {
   var url = urlBase;
   request(url, function (err, response, body) {
@@ -50,6 +95,23 @@ gt.async('json', function () {
 });
 
 gt.async('/json', function () {
+  var username = 'jashkenas';
+  var opts = {
+    url: urlBase + username + '/json'
+  };
+  request(opts, function (err, response, body) {
+    if (err) throw err;
+    gt.equal(response.statusCode, 200, 'got response');
+    gt.equal(response.headers['content-type'], 'application/json', 'returns json');
+
+    var result = JSON.parse(body);
+    gt.equal(result.username, username, 'correct username');
+    gt.start();
+  });
+});
+
+// todo: make sure second request uses cached data
+gt.async('/json 2', function () {
   var username = 'jashkenas';
   var opts = {
     url: urlBase + username + '/json'
