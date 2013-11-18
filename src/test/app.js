@@ -126,3 +126,20 @@ gt.async('/json 2', function () {
     gt.start();
   });
 });
+
+gt.async('/json user without modules', function () {
+  var username = 'lsilvo';
+  var opts = {
+    url: urlBase + username + '/json'
+  };
+  request(opts, function (err, response, body) {
+    if (err) throw err;
+    gt.equal(response.statusCode, 200, 'got response');
+    gt.equal(response.headers['content-type'], 'application/json', 'returns json');
+
+    var result = JSON.parse(body);
+    gt.equal(result.username, username, 'correct username');
+    gt.ok(!result.report, 'there is nothing to report');
+    gt.start();
+  });
+});
