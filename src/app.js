@@ -24,14 +24,22 @@ function keepGeneratedBadge(username, filename) {
   check.verify.unemptyString(filename, 'expected generated badge filename');
 
   var image = fs.readFileSync(filename);
-  badges[username] = {
+
+  var now = new moment();
+  var secondsInDay = 24 * 3600;
+
+  var info = {
     image: image,
-    date: new moment()
+    date: now,
+    expires: moment(now).add('days', 1),
+    maxAge: secondsInDay
   };
+
+  badges[username] = info;
 
   fs.unlinkSync(filename);
 
-  return image;
+  return info;
 }
 
 function generateBadge(username) {
@@ -64,7 +72,7 @@ function getBadge(username) {
     }
 
     if (badges[username].image) {
-      return badges[username].image;
+      return badges[username];
     }
   }
 
@@ -76,16 +84,20 @@ function sendBadge(username, res) {
   check.verify.unemptyString(username, 'expected username');
 
   Q.when(getBadge(username))
-  .then(function (image) {
-    if (!image) {
+  .then(function (info) {
+    if (!info || !info.image) {
       throw new Error('Undefined image for user ' + username);
     }
 
+    check.verify.positiveNumber(info.maxAge, 'missing max age for username ' + username);
+    check.verify.object(info.expires, 'missing expires for username ' + username);
     res.writeHead(200, {
-      'Content-Length': image.length,
-      'Content-Type': 'image/png'
+      'Content-Length': info.image.length,
+      'Content-Type': 'image/png',
+      'Cache-Control': 'public, max-age=' + info.maxAge,
+      'Expires': info.expires.utc().format()
     });
-    res.write(image);
+    res.write(info.image);
     res.end();
   })
   .catch(function (err) {

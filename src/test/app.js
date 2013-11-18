@@ -32,6 +32,7 @@ gt.module('server', {
       took = finished - started;
 
       gt.ok(took > 0, 'took a few ms');
+      gt.ok(response.headers['expires'], 'has expires header');
       gt.start();
     });
   });
@@ -50,11 +51,21 @@ gt.module('server', {
       gt.ok(took2 < took, 'second request completed faster than first');
 
       gt.equal(response.statusCode, 200, 'got response');
-      gt.equal(response.headers['content-type'], 'image/png', 'returns png');
       gt.start();
     });
   });
 }());
+
+gt.async('png has expires header', function () {
+  var username = 'jashkenas';
+  request(urlBase + username + '/png', function (err, response, body) {
+    if (err) throw err;
+    var finished = new Date();
+    gt.equal(response.statusCode, 200, 'got response');
+    gt.equal(response.headers['content-type'], 'image/png', 'returns png');
+    gt.start();
+  });
+});
 
 gt.async('no username', function () {
   var url = urlBase;
