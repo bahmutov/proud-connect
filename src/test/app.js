@@ -20,7 +20,7 @@ gt.async('no username', function () {
   });
 });
 
-gt.async('jashkenas', function () {
+gt.async('plain text', function () {
   var url = urlBase + 'jashkenas';
   request(url, function (err, response, body) {
     if (err) throw err;
@@ -33,3 +33,18 @@ gt.async('jashkenas', function () {
   });
 });
 
+gt.async('json', function () {
+  var username = 'jashkenas';
+  var opts = {
+    url: urlBase + username,
+    json: true
+  };
+  request(opts, function (err, response, body) {
+    if (err) throw err;
+    gt.equal(response.statusCode, 200, 'got response');
+    gt.equal(response.headers['content-type'], 'application/json', 'returns json');
+
+    gt.equal(body.username, username, 'correct username');
+    gt.start();
+  });
+});

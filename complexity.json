@@ -3,7 +3,7 @@
     "src": ["*.js", "src/*.js"],
     "options": {
       "errorsOnly": false,
-      "cyclomatic": 4,
+      "cyclomatic": 7,
       "halstead": 12,
       "maintainability": 80
     }

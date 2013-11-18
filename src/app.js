@@ -103,8 +103,6 @@ function sendTextReport(username, res) {
   proud(username)
   .then(report.bind(null, username))
   .then(function (report) {
-    console.log('report', report);
-
     res.writeHead(200, {
       'Content-Type': 'text/plain'
     });
@@ -114,6 +112,27 @@ function sendTextReport(username, res) {
     } else {
       res.end(report);
     }
+  })
+  .catch(console.error);
+}
+
+function sendJsonReport(username, res) {
+  console.log('returning json for', username);
+
+  proud(username)
+  .then(report.bind(null, username))
+  .then(function (report) {
+    var result = {
+      username: username,
+      report: report
+    };
+    console.log('report', result);
+
+    res.writeHead(200, {
+      'Content-Type': 'application/json'
+    });
+
+    res.end(JSON.stringify(result));
   })
   .catch(console.error);
 }
@@ -137,8 +156,12 @@ var app = connect()
       return;
     }
 
+    console.log('accepts', req.headers.accept);
+
     if (/image/.test(req.headers.accept)) {
       sendBadge(username, res);
+    } else if (req.headers.accept === 'application/json') {
+      sendJsonReport(username, res);
     } else {
       sendTextReport(username, res);
     }
