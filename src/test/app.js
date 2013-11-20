@@ -162,7 +162,7 @@ gt.async('/png user without modules', function () {
   };
   request(opts, function (err, response, body) {
     if (err) throw err;
-    gt.equal(response.statusCode, 500, 'got 500 response');
+    gt.equal(response.statusCode, 200, 'got 200 response');
     gt.start();
   });
 });

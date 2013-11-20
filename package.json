@@ -31,7 +31,7 @@
   },
   "dependencies": {
     "connect": "~2.11.0",
-    "proud-badge": "0.0.2",
+    "proud-badge": "0.0.4",
     "proud": "0.0.6",
     "easy-table": "~0.2.0",
     "lodash": "~2.3.0",
