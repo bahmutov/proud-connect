@@ -1,6 +1,6 @@
 {
   "name": "proud-connect",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Connect server generating NPM downloads badges by author",
   "main": "index.js",
   "scripts": {
@@ -22,6 +22,12 @@
   ],
   "author": "Gleb Bahmutov @bahmutov <gleb.bahmutov@gmail.com>",
   "pre-commit": [
+    "grunt",
+    "npm test"
+  ],
+  "pre-push": [
+    "rm -rf node_modules",
+    "npm install",
     "grunt",
     "npm test"
   ],

@@ -1,4 +1,10 @@
 
+0.0.4 / 2013-11-19
+==================
+
+  * default image for unknown user, fixes #6
+  * added expires header, fixes #4
+
 0.0.3 / 2013-11-17
 ==================
 
