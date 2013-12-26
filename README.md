@@ -30,7 +30,7 @@ npm install
 node index.js
 ```
 
-Badge / json information can be fetched `http://localhost:3000/username
+Badge / json information can be fetched `http://localhost:3000/username`
 
 #### Using the deployed Heroku app
 
