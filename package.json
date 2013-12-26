@@ -36,25 +36,25 @@
     "url": "https://github.com/bahmutov/proud-connect/issues"
   },
   "dependencies": {
-    "connect": "~2.11.0",
+    "connect": "~2.12.0",
     "proud-badge": "0.0.4",
-    "proud": "0.0.6",
+    "proud": "0.0.7",
     "easy-table": "~0.2.0",
-    "lodash": "~2.3.0",
-    "check-types": "~1.1.0",
+    "lodash": "~2.4.1",
+    "check-types": "~1.1.1",
     "q": "~0.9.7",
-    "moment": "~2.4.0",
-    "request": "~2.27.0"
+    "moment": "~2.5.0",
+    "request": "~2.30.0"
   },
   "devDependencies": {
-    "nodemon": "~0.9.7",
-    "grunt-contrib-jshint": "~0.7.2",
+    "nodemon": "~0.9.17",
+    "grunt-contrib-jshint": "~0.8.0",
     "matchdep": "~0.3.0",
-    "grunt-readme": "~0.3.0",
-    "grunt": "~0.4.1",
+    "grunt-readme": "~0.4.5",
+    "grunt": "~0.4.2",
     "grunt-complexity": "~0.1.3",
-    "jshint-stylish": "~0.1.3",
-    "gt": "~0.8.20",
-    "pre-git": "0.0.13"
+    "jshint-stylish": "~0.1.4",
+    "gt": "~0.8.21",
+    "pre-git": "0.0.14"
   }
 }
