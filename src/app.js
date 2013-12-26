@@ -155,16 +155,20 @@ function isImage(format) {
     format === 'image';
 }
 
+var raven = require('raven');
+var RAVEN_URI = 'https://fc9f5a7e88204f069de9dc8680ac6216:5a11fd1a7f1b4f0d982ab24997dedc20@app.getsentry.com/17313';
+
 var app = connect()
   .use(connect.favicon())
   .use(connect.logger('dev'))
   .use(connect.static('public'))
+  .use(connect.bodyParser())
+  .use(connect.cookieParser())
   .use(connect.query())
   .use(function (req, res) {
     if (!req.url || req.url === '/') {
       res.writeHead(401, 'missing NPM username');
       res.end();
-      return;
     }
 
     var parts = req.url.split('/');
@@ -191,7 +195,8 @@ var app = connect()
     } else {
       sendTextReport(username, res);
     }
-  });
+  })
+  .use(raven.middleware.connect(RAVEN_URI));
 
 module.exports = function listen(port) {
   port = port || process.env.PORT || 3000;
