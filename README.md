@@ -2,13 +2,13 @@
 
 > Connect server generating NPM downloads badges by author
 
-[![NPM][proud-connect-icon}}[proud-connect-url]
+[![NPM][proud-connect-icon] ][proud-connect-url]
 
-[![Build status][proud-connect-ci-image}}[proud-connect-ci-url]
-[![dependencies][proud-connect-dependencies-image}}[proud-connect-dependencies-url]
-[![devdependencies][proud-connect-devdependencies-image}}[proud-connect-devdependencies-url]
+[![Build status][proud-connect-ci-image] ][proud-connect-ci-url]
+[![dependencies][proud-connect-dependencies-image] ][proud-connect-dependencies-url]
+[![devdependencies][proud-connect-devdependencies-image] ][proud-connect-devdependencies-url]
 
-[![endorse][endorse-image}}[endorse-url]
+[![endorse][endorse-image] ][endorse-url]
 
 [proud-connect-icon]: https://nodei.co/npm/proud-connect.png?downloads=true
 [proud-connect-url]: https://npmjs.org/package/proud-connect
