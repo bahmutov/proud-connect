@@ -68,8 +68,11 @@ gt.async('png has expires header', function () {
 });
 
 gt.async('no username', function () {
-  var url = urlBase;
-  request(url, function (err, response, body) {
+  var opts = {
+    url: urlBase,
+    json: true
+  };
+  request(opts, function (err, response, body) {
     if (err) throw err;
     gt.equal(response.statusCode, 401, '401 without username');
     gt.start();

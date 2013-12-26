@@ -161,6 +161,16 @@ var RAVEN_URI = 'https://fc9f5a7e88204f069de9dc8680ac6216:5a11fd1a7f1b4f0d982ab2
 var app = connect()
   .use(connect.favicon())
   .use(connect.logger('dev'))
+  .use(function checkJsonNoUsername(req, res, next) {
+    if (!req.url || req.url === '/') {
+      if (req.headers.accept === 'application/json') {
+        res.writeHead(401, 'missing NPM username');
+        res.end();
+        return;
+      }
+    }
+    next();
+  })
   .use(connect.static('public'))
   .use(connect.bodyParser())
   .use(connect.cookieParser())
