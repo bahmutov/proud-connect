@@ -7,7 +7,7 @@ Badge / json information can be fetched `http://localhost:3000/username
 
 ### Using the deployed Heroku app
 
-![bahmutov badge](http://proud.herokuapp.com/bahmutov)
+![jashkenas badge](http://proud.herokuapp.com/jashkenas)
 
 Use Markdown:
 
