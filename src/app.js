@@ -1,10 +1,12 @@
 var connect = require('connect');
+var utils = connect.utils;
 var http = require('http');
 var proud = require('proud');
 var badge = require('proud-badge');
 var report = require('./report');
 var fs = require('fs');
 var check = require('check-types');
+var verify = check.verify;
 var Q = require('q');
 var moment = require('moment');
 
@@ -156,7 +158,39 @@ function isImage(format) {
 }
 
 var raven = require('raven');
-var RAVEN_URI = 'https://fc9f5a7e88204f069de9dc8680ac6216:5a11fd1a7f1b4f0d982ab24997dedc20@app.getsentry.com/17313';
+var SENTRY_DSN = 'https://fc9f5a7e88204f069de9dc8680ac6216:5a11fd1a7f1b4f0d982ab24997dedc20@app.getsentry.com/17313';
+
+function respondWithBadge(req, res, next) {
+  if (!req.url || req.url === '/') {
+    console.log('missing NPM username', req);
+    return next(utils.error(401));
+  }
+
+  verify.unemptyString(req.url, 'missing req url string');
+  var parts = req.url.split('/');
+  var username = parts[1];
+  if (!username) {
+    return next(utils.error(401));
+  }
+
+  var acceptsFormat = req.headers.accept;
+  if (parts.length > 2) {
+    acceptsFormat = parts[2];
+    check.verify.unemptyString(acceptsFormat, 'wrong format ' + acceptsFormat);
+    console.log('requesting format', acceptsFormat);
+  }
+  console.log('accepts', acceptsFormat);
+
+  if (isImage(acceptsFormat)) {
+    return sendBadge(username, res);
+  }
+
+  if (acceptsFormat === 'application/json' || acceptsFormat === 'json') {
+    return sendJsonReport(username, res);
+  }
+
+  return sendTextReport(username, res);
+}
 
 var app = connect()
   .use(connect.favicon())
@@ -164,49 +198,18 @@ var app = connect()
   .use(function checkJsonNoUsername(req, res, next) {
     if (!req.url || req.url === '/') {
       if (req.headers.accept === 'application/json') {
-        res.writeHead(401, 'missing NPM username');
-        res.end();
-        return;
+        console.log('empty username and json output');
+        return next(utils.error(401));
       }
     }
-    next();
+    return next();
   })
   .use(connect.static('public'))
   .use(connect.bodyParser())
   .use(connect.cookieParser())
   .use(connect.query())
-  .use(function (req, res) {
-    if (!req.url || req.url === '/') {
-      res.writeHead(401, 'missing NPM username');
-      res.end();
-    }
-
-    var parts = req.url.split('/');
-    var username = parts[1];
-    if (!username) {
-      res.writeHead(401, 'missing NPM username');
-      res.end();
-      return;
-    }
-
-    var acceptsFormat = req.headers.accept;
-    if (parts.length > 2) {
-      acceptsFormat = parts[2];
-      check.verify.unemptyString(acceptsFormat, 'wrong format ' + acceptsFormat);
-      console.log('requesting format', acceptsFormat);
-    }
-    console.log('accepts', acceptsFormat);
-
-    if (isImage(acceptsFormat)) {
-      sendBadge(username, res);
-    } else if (acceptsFormat === 'application/json' ||
-      acceptsFormat === 'json') {
-      sendJsonReport(username, res);
-    } else {
-      sendTextReport(username, res);
-    }
-  })
-  .use(raven.middleware.connect(RAVEN_URI));
+  .use(respondWithBadge)
+  .use(raven.middleware.connect(SENTRY_DSN));
 
 module.exports = function listen(port) {
   port = port || process.env.PORT || 3000;
